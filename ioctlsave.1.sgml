@@ -1,0 +1,236 @@
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook V4.1//EN">
+
+<!-- $Id$ -->
+
+<refentry id="ioctlsave">
+
+  <refmeta>
+    <refentrytitle>ioctlsave</refentrytitle>
+    <manvolnum>1</manvolnum>
+  </refmeta>
+
+
+  <refnamediv>
+    <refname>ioctlsave</refname>
+
+    <refpurpose>Save terminal settings in a file, in the same format as <citerefentry><refentrytitle><application>init</application></refentrytitle><manvolnum>8</manvolnum></citerefentry> writes <filename>/etc/ioctl.save</filename>.</refpurpose>
+  </refnamediv>
+
+
+  <refsynopsisdiv>
+    <cmdsynopsis>
+      <command>ioctlsave</command>
+      <arg choice="opt">-t <replaceable>terminal_device</replaceable></arg>
+      <arg choice="opt"><replaceable>file_name</replaceable></arg>
+    </cmdsynopsis>
+
+    <cmdsynopsis>
+      <command>ioctlsave</command>
+      <arg choice="req">-h</arg>
+    </cmdsynopsis>
+
+    <cmdsynopsis>
+      <command>ioctlsave</command>
+      <arg choice="req">-V</arg>
+    </cmdsynopsis>
+  </refsynopsisdiv>
+
+
+  <refsect1>
+    <title>Description</title>
+
+    <para><command>ioctlsave</command> records the current terminal
+    settings to <replaceable>file_name</replaceable>.  The terminal
+    settings are saved in the same format that
+    <citerefentry><refentrytitle><application>init</application></refentrytitle><manvolnum>8</manvolnum></citerefentry>
+    uses when creating <filename>/etc/ioctl.save</filename>.</para>
+
+    <para>The file <filename>/etc/ioctl.save</filename> is used by
+    <citerefentry><refentrytitle><application>init</application></refentrytitle><manvolnum>8</manvolnum></citerefentry>
+    to establish the terminal settings for the console when
+    <citerefentry><refentrytitle><application>init</application></refentrytitle><manvolnum>8</manvolnum></citerefentry>
+    enters the single user run level.  In the multiple user run levels
+    <citerefentry><refentrytitle><application>getty</application></refentrytitle><manvolnum>8</manvolnum></citerefentry>
+    establishes the terminal settings.</para>
+
+    <para><filename>/etc/ioctl.save</filename> is usually created by
+    deleting <filename>/etc/ioctl.save</filename>, entering single
+    user mode
+    (<citerefentry><refentrytitle><application>init</application></refentrytitle><manvolnum>8</manvolnum></citerefentry>
+    will default to 9600<acronym>bps</acronym>), using
+    <citerefentry><refentrytitle><command>stty</command></refentrytitle><manvolnum>1</manvolnum></citerefentry>
+    to adjust the terminal settings and exiting single user mode.
+    When exiting single user mode without an existing
+    <filename>/etc/ioctl.save</filename>
+    <application>init</application> creates
+    <filename>/etc/ioctl.save</filename> from the current console
+    settings.</para>
+
+    <para>Occassionaly this mechanism cannot be used.  Consider a
+    fixed bit rate modem with a speed other than
+    9600<acronym>bps</acronym>.  In these scenarios
+    <command>ioctlsave</command> can be used to create
+    <filename>/etc/ioctl.save</filename>.  Log into the console in
+    multiple user mode, let
+    <citerefentry><refentrytitle><application>getty</application></refentrytitle><manvolnum>8</manvolnum></citerefentry>
+    automatically establish the correct terminal settings, and
+    enter:</para>
+
+    <informalexample>
+<screen format="linespecific" linenumbering="unnumbered">
+<prompt>#</prompt> <userinput>ioctlsave /etc/ioctl.save</userinput>
+</screen>
+    </informalexample>
+
+    <para>In the worst case, <command>ioctlsave</command> can be given
+    the <option>-t</option> option to specify the terminal who's
+    current settings should be used by the console in single user
+    mode.</para>
+
+    <para><command>ioctlsave</command> returns a status of zero if all
+    is well, otherwise it returns a non-zero status and an
+    accompanying message to the standard error output.</para>
+  </refsect1>
+
+
+  <refsect1>
+    <title>Options</title>
+
+    <variablelist>
+      <varlistentry>
+        <term><replaceable class="parameter">file_name</replaceable></term>
+        <listitem>
+          <para>The name of the file to contain the saved terminal
+          settings.  Traditionally the name is
+          <filename>/etc/ioctl.save</filename>.</para>
+
+          <para>The file is replaced if it exists.</para>
+
+          <para>If <replaceable
+          class="parameter">file_name</replaceable> is absent, the
+          terminal settings will be written to the standard
+          output.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><option>-t
+        <replaceable class="option">terminal_device</replaceable></option></term>
+        <listitem>
+          <para>Take the terminal settings of <replaceable
+          class="option">terminal_device</replaceable>.</para>
+
+          <para>For example, to use the terminal settings of the first
+          serial port:</para>
+          
+    <informalexample>
+<screen format="linespecific" linenumbering="unnumbered">
+<prompt>#</prompt> <userinput>ioctlsave -t /dev/ttyS0 /etc/ioctl.save</userinput>
+</screen>
+    </informalexample>
+
+          <para>If <option>-t</option> is absent, the terminal
+          settings of the current controlling terminal will be
+          used.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><option>-h</option></term>
+        <listitem>
+          <para>Help</para>
+
+          <para>Print some help text summarising the syntax of
+          ioctlsave to the standard output. Exit with a status of
+          zero.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><option>-V</option></term>
+        <listitem>
+          <para>Version</para>
+
+          <para>Print the version number of
+          <command>ioctlsave</command> and other source control
+          information to the standard output.  Exit with a status of
+          zero.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
+
+  <refsect1>
+    <title>Files</title>
+
+    <variablelist>
+      <varlistentry>
+        <term><filename>/etc/ioctl.save</filename></term>
+        <listitem>
+          <para>This file contains the terminal settings used to
+          initialise the console device when the single user run level
+          is entered.  The format is a binary
+          <citerefentry><refentrytitle><type>struct
+          termios</type></refentrytitle><manvolnum>3</manvolnum></citerefentry>
+          record.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
+
+  <!-- Environment -->
+
+  <!-- Diagnostics -->
+
+  <refsect1>
+    <title>Bugs</title>
+
+    <para>An option to <command>stty</command> would be better than a
+    distinct command.</para>
+
+    <para>As
+    <citerefentry><refentrytitle><application>init</application></refentrytitle><manvolnum>8</manvolnum></citerefentry>
+    uses a binary <type>termios</type> record as the format for
+    <filename>/etc/ioctl.save</filename>, the output of
+    <command>ioctlsave</command> should not be moved between differing
+    computer architectures.  This scheme will break should the format
+    of the a binary <type>termios</type> record ever change.</para>
+
+    <para>Please report other bugs to
+    <email>glen.turner+howto@aarnet.edu.au</email>.  Please include
+    the verbatim command line, verbatim error messages, and the ouptut
+    of <command>ioctlsave -V</command>.</para>
+  </refsect1>
+
+
+  <refsect1>
+    <title>Author</title>
+
+    <para>Copyright © <acronym>AARNet</acronym> <abbrev>Pty</abbrev>
+    <abbrev>Ltd</abbrev> (<acronym>ACN</acronym> 084 540 518). <ulink
+    url="http://www.aarnet.edu.au/">Australian Academic and Research
+    Network</ulink>.</para>
+
+    <para>Licensed to the public under the <ulink
+    url="http://www.gnu.org/licenses/gpl.html"><citetitle><acronym>GNU</acronym>
+    General Public License</citetitle></ulink> Version
+    Two. <acronym>AARNet</acronym> members may have additional license
+    choices.</para>
+
+    <para>Written by Glen Turner,
+    <email>glen.turner+howto@aarnet.edu.au</email>.</para>
+  </refsect1>
+
+
+  <refsect1>
+    <title>See also</title>
+
+    <para><citerefentry><refentrytitle>init</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
+    <citerefentry><refentrytitle>termios</refentrytitle><manvolnum>3</manvolnum></citerefentry>,
+    <citerefentry><refentrytitle>getty</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
+    <citerefentry><refentrytitle>stty</refentrytitle><manvolnum>1</manvolnum></citerefentry>.</para>
+  </refsect1>
+
+</refentry>
