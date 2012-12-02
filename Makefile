@@ -2,13 +2,13 @@
 #
 # Build ioctlsave.
 #
-# Copyright © AARNet Pty Ltd (ACN 084 540 518).
+# Copyright ï¿½ AARNet Pty Ltd (ACN 084 540 518).
 # Australian Academic & Research Network, http://www.aarnet.edu.au/
 # Licensed to the public under the GNU General Public License Version Two,
 # see http://www.gnu.org/licenses/gpl.html. AARNet members may have
 # additional license choices.
 #
-# Written by Glen Turner, glen.turner+howto@aarnet.edu.au.
+# Written by Glen Turner, <http://www.gdt.id.au/~gdt/>
 # 
 # $Id$
 
