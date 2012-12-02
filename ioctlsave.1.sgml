@@ -199,7 +199,7 @@
     of the a binary <type>termios</type> record ever change.</para>
 
     <para>Please report other bugs to
-    <email>glen.turner+howto@aarnet.edu.au</email>.  Please include
+    Glen Turner of AARNet.  Please include
     the verbatim command line, verbatim error messages, and the ouptut
     of <command>ioctlsave -V</command>.</para>
   </refsect1>
@@ -208,7 +208,7 @@
   <refsect1>
     <title>Author</title>
 
-    <para>Copyright © <acronym>AARNet</acronym> <abbrev>Pty</abbrev>
+    <para>Copyright ï¿½ <acronym>AARNet</acronym> <abbrev>Pty</abbrev>
     <abbrev>Ltd</abbrev> (<acronym>ACN</acronym> 084 540 518). <ulink
     url="http://www.aarnet.edu.au/">Australian Academic and Research
     Network</ulink>.</para>
